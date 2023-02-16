@@ -1,0 +1,16 @@
+/**store items:
+mocha,
+espresso,
+black coffee,
+**/
+CREATE TABLE menu (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, caffeine_in_mg INTEGER, quantity_sold INTEGER); 
+
+-->added items onto the table including name, price, cafeeine, and quantity sold
+INSERT INTO menu VALUES (1, "mocha", 4.5,150, 12);
+INSERT INTO menu VALUES (2, "espresso", 3, 200, 13);
+INSERT INTO menu VALUES (3, "black coffee", 2.5, 220, 24);
+
+--> sort by price of coffee that is more than $3
+--> totaled the # of drinks sold
+SELECT * FROM menu where price >=3;
+SELECT SUM (quantity_sold) FROM menu;
