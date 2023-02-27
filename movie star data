@@ -1,0 +1,27 @@
+/* The tables below include information on movie stars, their age, and # of movies starred in. The second table includes title of movies, the year it was released. */
+
+CREATE TABLE movie_stars (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, starred INTEGER, movie_id INTEGER);
+
+INSERT INTO movie_stars VALUES (1, "Scarlett Johansen", 38, 33, 2);
+INSERT INTO movie_stars VALUES (2, "Robert Downey, Jr.", 57, 4, 2);
+INSERT INTO movie_stars VALUES (3, "Sameul L. Jackson", 74, 64, 3);
+INSERT INTO movie_stars VALUES (4, "Will Smith", 54, 34, 1);
+INSERT INTO movie_stars VALUES (6, "Chris Evans", 41, 45, 2);
+INSERT INTO movie_stars VALUES (7, "Channing Tatum", 42, 44, 3);
+
+CREATE TABLE movies (id INTEGER PRIMARY KEY, name TEXT, year INTEGER);
+
+INSERT INTO movies VALUES (1, "The Pursuit of Happyness", 2001);
+INSERT INTO movies VALUES (2, "Avengers Age of Ultron", 2015);
+INSERT INTO movies VALUES (3, "Coach Carter", 2005);
+
+/** Using a JOIN I have matched the name of actors/actresses from table 1 with the name of the movie they starred in**/
+SELECT movie_stars.name, movies.name AS name_of_movie FROM movie_stars 
+JOIN movies 
+ON movie_stars.movie_id=movies.id;
+
+/**This JOIN shows the names of movie stars that appear in the same movies**/
+SELECT movie_stars.name, co_star.name AS co_star 
+FROM movie_stars 
+JOIN movie_stars co_star
+ON movie_stars.movie_id=co_star.movie_id;
