@@ -24,4 +24,5 @@ ON movie_stars.movie_id=movies.id;
 SELECT movie_stars.name, co_star.name AS co_star 
 FROM movie_stars 
 JOIN movie_stars co_star
-ON movie_stars.movie_id=co_star.movie_id;
+ON movie_stars.movie_id=co_star.movie_id
+GROUP BY movie_stars.name;
