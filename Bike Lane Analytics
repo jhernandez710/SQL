@@ -81,3 +81,15 @@ GROUP BY street
 SELECT average_rating, 'Safe Lane' AS 'label', street
 FROM Average_safety_rating_CTE
 WHERE average_rating>= 4;
+
+-- Using a case statement I created a category labeled recommedation to sort different average safety ratings. I then ordered the street names according to their rating and recommendation
+
+SELECT street, safetyrating,
+AVG(safetyrating) OVER (PARTITION BY street) as "Average_safety_rating",
+CASE
+WHEN AVG(safetyrating) OVER (PARTITION BY street) >=4 THEN 'Leave as-is'
+WHEN AVG(safetyrating) OVER (PARTITION BY street)<2.5 THEN 'Remove'
+ELSE 'Improvements Needed'
+END AS 'recommendation'
+FROM CityBikeLanes
+ORDER BY AVG(safetyrating) OVER (PARTITION BY street) asc
