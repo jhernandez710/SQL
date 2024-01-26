@@ -63,10 +63,30 @@ SELECT company_name, paid_time_off_days AS PTO
 FROM fortune_companies
 ORDER BY PTO desc
 
---What is the average number of maternity leave weeks amongst all Fortune 500 companies?--
+--What is the average, maximum, and minimum number of maternity leave weeks amongst all Fortune 500 companies?--
+SELECT ROUND(AVG(maternity_leave_weeks)) AS Average_Maternity_Leave_Weeks, MAX(maternity_leave_weeks) AS Max_maternity_leave_weeks, MIN(maternity_leave_weeks) AS MIN_maternity_leave_weeks
+FROM fortune_companies
 
--- Do companies with more tenured employees have more PTO days--
+-- Create a seperate table that counts how many companies offer PTO days below average, average, or above average. --
+SELECT COUNT(*),
+CASE 
+	WHEN maternity_leave_weeks >10.99 THEN 'Above average'
+	WHEN maternity_leave_weeks >9 THEN 'Average'
+	WHEN maternity_leave_weeks >=6 THEN 'Below average'
+	ELSE 'No Maternity leave'
+END AS Maternity_leave_offered
+FROM fortune_companies
+GROUP BY Maternity_leave_offered;
 
--- Does revenue of the company have anything to do with the number of employees or the number of PTO days they are able to offer?--
+-- Which companies offer both healthcare benefits and more than 12 weeks maternity leave?--
+SELECT company_name, maternity_leave_weeks
+FROM fortune_companies
+WHERE healthcare_benefits=1 AND maternity_leave_weeks >=12
+ORDER BY maternity_leave_weeks desc;
 
---The following query uses a CASE statement to seperate the number of employees into groups to determine the large vs. small companies.--
+-- Which industries have an average revenue that is greater than 200?--
+SELECT ROUND(AVG(revenue)) AS Average_revenue_by_industry, industry
+FROM fortune_companies
+GROUP BY industry
+HAVING Average_revenue_by_industry >=200
+ORDER BY Average_revenue_by_industry desc
